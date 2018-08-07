@@ -58,4 +58,19 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  # start the transaction strategy as examples are on
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+    Faker::UniqueGenerator.clear
+  end
+  #ngeclean database setiap x masuk ke it, jadi ga ada yang duplicate
+
+  config.include FactoryGirl::Syntax::Methods
 end
