@@ -4,7 +4,7 @@ class FoodsController < ApplicationController
   # GET /foods
   # GET /foods.json
   def index
-    @foods = Food.by_letter(params(:letter))
+    @foods = Food.by_letter(params[:letter])
   end
 
   # GET /foods/1
